@@ -1,0 +1,26 @@
+{
+    "documents_list": {
+        "description": "查看RAG库中全部已向量化的文档",
+        "path": "/api/v1/documents",
+        "method": "GET",
+        "schema": {
+            "type": "object",
+            "properties": {}
+        }
+    },
+    "find_doc_by_id": {
+        "description": "根据指定已向量化的文档id，查询文档信息",
+        "path": "/api/v1/documents/:id",
+        "method": "GET",
+        "schema": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "目标文档id"
+                }
+            },
+            "required": ["id"]
+        }
+    }
+}
