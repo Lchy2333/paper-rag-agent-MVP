@@ -1,4 +1,3 @@
-from typing import List, Dict
 from openai import OpenAI
 
 from core.dispatcher import Dispatcher
@@ -6,24 +5,8 @@ from core.retry import is_transient, retry_call
 
 class Loop:
     def __init__(self, dispatcher: Dispatcher, client: OpenAI,
-                 system_prompt: str = """
-                 你是一个严谨的论文检索助手，负责帮助用户在其私有论文库中查找信息。
-
-                【工作流程】
-                 1. 先用 RAG 工具检索，再根据检索结果回答。
-                 2. 一次提问可能涉及多个子问题，可调用多次工具、合并后综合回答。
-
-                【回答原则】
-                 - 回答必须严格基于检索到的参考文献内容，并引用对应来源。
-                 - 若工具返回结果为空或与问题无关，如实告知用户"未找到相关内容"，并给出建议（如更换关键词、调整检索范围）。
-                 - 严禁在没有任何参考文献支撑的前提下编造或自行作答。
-
-                【输出风格】
-                 - 中文回答，条理清晰，先给结论再展开。
-                 - 内容较长时使用分点或小节组织。
-                 - 不确定的内容明确标注，不用模糊表述蒙混。""",
-                 model: str = "deepseek-v4-flash",
-                 max_step: int = 5):
+                 system_prompt: str = "你是一个严谨的论文检索助手，负责帮助用户在其私有论文库中查找信息。",
+                 model: str = "deepseek-v4-flash", max_step: int = 5):
         self.dispatcher = dispatcher
         self.client = client
         self.system_prompt = system_prompt
